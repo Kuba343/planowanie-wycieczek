@@ -1,7 +1,9 @@
 Skład grupy: Jakub Szklarz, Patryk Osiecki
 Wybór projektu: Planowanie wycieczek grupowych
+
 1.Cel projektu
 Naszym celem jest stworzenie aplikacji webowej, która ułatwi grupie znajomych ogarnięcie wspólnego wyjazdu – od pierwszego pomysłu aż po dopięcie listy uczestników. Użytkownicy zakładają konta, dodają znajomych i tworzą wycieczki (od zera lub na bazie gotowych szablonów z rozpisanym planem dnia). Organizator ustala limit miejsc i termin na decyzję, zaprasza wybrane osoby, a każdy zaproszony widzi plan wyjazdu, deklaruje swój udział i widzi cenę na osobę.
+
 2.Zakres aplikacji
 -Rejestracja konta, logowanie i wylogowanie z użyciem adresu e-mail oraz hasła. Każdy użytkownik ustala unikalną nazwę widoczną w aplikacji.
 -Wyszukiwanie użytkowników po nazwie, wysyłanie i obsługa zaproszeń do znajomych oraz przeglądanie listy znajomych.
@@ -61,7 +63,6 @@ Naszym celem jest stworzenie aplikacji webowej, która ułatwi grupie znajomych 
 •	category: TripCategory;
 •	days: TripDay[]; - przykładowy plan poszczególnych dni.
 
-
 -User: użytkownik aplikacji {
 •	id: number;
 •	username: string;
@@ -74,12 +75,13 @@ Naszym celem jest stworzenie aplikacji webowej, która ułatwi grupie znajomych 
 •	status: string;
 •	createdAt: Date;
 •	respondedAt?: Date;}
+
 4. Statusy uczestnictwa
-Pole / status	Znaczenie
-Status uczestnictwa: invited	Wysłano zaproszenie, uczestnik jeszcze nie odpowiedział.
-Status uczestnictwa: interested	Użytkownik jest zainteresowany, ale nie potwierdził jeszcze udziału.
-Status uczestnictwa: confirmed	Użytkownik zadeklarował udział.
-Status uczestnictwa: declined / cancelled	Użytkownik odrzucił zaproszenie albo zrezygnował po jego przyjęciu.
+pole / status	/znaczenie
+Status uczestnictwa:   invited	              Wysłano zaproszenie, uczestnik jeszcze nie odpowiedział.
+Status uczestnictwa:   interested	            Użytkownik jest zainteresowany, ale nie potwierdził jeszcze udziału.
+Status uczestnictwa:   confirmed	            Użytkownik zadeklarował udział.
+Status uczestnictwa:   declined / cancelled	  Użytkownik odrzucił zaproszenie albo zrezygnował po jego przyjęciu.
 
 5.Walidacja i reguły biznesowe
 -Nazwa użytkownika jest wymagana, ma ustaloną długość i nie może być już zajęta.
@@ -88,9 +90,6 @@ Status uczestnictwa: declined / cancelled	Użytkownik odrzucił zaproszenie albo
 -Data zakończenia musi przypadać po dacie rozpoczęcia; termin potwierdzenia nie może być późniejszy od rozpoczęcia wyjazdu.
 -Limit uczestników musi być dodatni; nowych potwierdzeń nie przyjmuje się po osiągnięciu limitu.
 -Tylko organizator może edytować i usuwać własną wycieczkę oraz odnotować wpłatę. Uczestnik może zmienić własną odpowiedź na zaproszenie.
-
-
-
 
 6. Planowane funkcjonalności do implementacji
 
