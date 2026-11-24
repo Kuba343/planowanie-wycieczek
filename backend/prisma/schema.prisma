@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. Użytkownicy
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  // Relacje
+  sentRequests     FriendRequest[]   @relation("SentRequests")
+  receivedRequests FriendRequest[]   @relation("ReceivedRequests")
+  organizedTrips   Trip[]            @relation("TripOrganizer")
+  participations   TripParticipant[]
+}
+
+// 2. Zaproszenia do znajomych (status: 'pending' | 'accepted' | 'declined')
+model FriendRequest {
+  id          Int       @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  status      String    @default("pending")
+  createdAt   DateTime  @default(now())
+  respondedAt DateTime?
+
+  sender   User @relation("SentRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ReceivedRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+}
+
+// 3. Słownik kategorii wycieczek
+model TripCategory {
+  id        Int            @id @default(autoincrement())
+  name      String         @unique
+  trips     Trip[]
+  templates TripTemplate[]
+}
+
+// 4. Szablony wycieczek
+model TripTemplate {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  destination String
+  targetGroup String
+  imageUrl    String?
+  categoryId  Int
+
+  category TripCategory @relation(fields: [categoryId], references: [id])
+  days     TripDay[]
+}
+
+// 5. Konkretne wycieczki
+model Trip {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  destination          String
+  description          String
+  startDate            DateTime
+  endDate              DateTime
+  pricePerPerson       Float
+  depositPerPerson     Float    @default(0)
+  maxParticipants      Int
+  confirmationDeadline DateTime
+  imageUrl             String?
+  categoryId           Int
+  organizerId          Int
+  createdAt            DateTime @default(now())
+
+  category     TripCategory      @relation(fields: [categoryId], references: [id])
+  organizer    User              @relation("TripOrganizer", fields: [organizerId], references: [id])
+  days         TripDay[]
+  participants TripParticipant[]
+}
+
+// 6. Dni planu (wspólne dla wycieczki i szablonu; activities jako JSONB)
+model TripDay {
+  id         Int       @id @default(autoincrement())
+  dayNumber  Int
+  date       DateTime?
+  title      String
+  activities Json      @default("[]") // Tablica obiektów Activity[] w PostgreSQL (JSONB)
+  tripId     Int?
+  templateId Int?
+
+  trip     Trip?         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  template TripTemplate? @relation(fields: [templateId], references: [id], onDelete: Cascade)
+}
+
+// 7. Uczestnicy wycieczki + statusy i zaliczki
+model TripParticipant {
+  tripId              Int
+  userId              Int
+  participationStatus String   @default("invited") // invited | interested | confirmed | declined | cancelled
+  depositStatus       String   @default("unpaid")  // unpaid | partial | paid
+  depositPaid         Float    @default(0)
+  invitedAt           DateTime @default(now())
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([tripId, userId])
+}

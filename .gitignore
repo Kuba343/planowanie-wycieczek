@@ -1,9 +1,6 @@
-# Zależności
 node_modules/
-
-# Pliki środowiskowe z hasłami
-.env
-
-# Pliki wynikowe kompilacji
 dist/
 .angular/
+.env
+backend/.env
+*.log
