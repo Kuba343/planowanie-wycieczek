@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg-page: #f5f2ed;
+  --bg-card: #ffffff;
+  --color-espresso: #140c07;
+  --color-umber: #301c0e;
+  --color-saddle: #4c331c;
+  --color-bronze: #684c30;
+  --color-taupe: #877c72;
+  --color-danger: #9e2a2b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--color-espresso);
+}

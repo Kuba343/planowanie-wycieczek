@@ -1,0 +1,30 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Logowanie</h2>
+    <p class="subtitle">Zaloguj się, aby zarządzać swoimi wycieczkami</p>
+
+    @if (errorMessage()) {
+      <div class="error-box">{{ errorMessage() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="email">Adres e-mail</label>
+        <input id="email" type="email" formControlName="email" placeholder="np. jakub@test.pl" />
+      </div>
+
+      <div class="field">
+        <label for="password">Hasło</label>
+        <input id="password" type="password" formControlName="password" placeholder="••••••" />
+      </div>
+
+      <button type="submit" [disabled]="form.invalid || loading()">
+        {{ loading() ? 'Logowanie...' : 'Zaloguj się' }}
+      </button>
+    </form>
+
+    <p class="switch-link">
+      Nie masz jeszcze konta? <a routerLink="/auth/register">Zarejestruj się</a>
+    </p>
+  </div>
+</div>

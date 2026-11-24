@@ -1,0 +1,35 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>Rejestracja</h2>
+    <p class="subtitle">Utwórz konto i planuj wspólne wyjazdy</p>
+
+    @if (errorMessage()) {
+      <div class="error-box">{{ errorMessage() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="username">Nazwa użytkownika</label>
+        <input id="username" type="text" formControlName="username" placeholder="np. jakub_travel" />
+      </div>
+
+      <div class="field">
+        <label for="email">Adres e-mail</label>
+        <input id="email" type="email" formControlName="email" placeholder="np. jakub@test.pl" />
+      </div>
+
+      <div class="field">
+        <label for="password">Hasło (min. 6 znaków)</label>
+        <input id="password" type="password" formControlName="password" placeholder="••••••" />
+      </div>
+
+      <button type="submit" [disabled]="form.invalid || loading()">
+        {{ loading() ? 'Tworzenie konta...' : 'Zarejestruj się' }}
+      </button>
+    </form>
+
+    <p class="switch-link">
+      Masz już konto? <a routerLink="/auth/login">Zaloguj się</a>
+    </p>
+  </div>
+</div>

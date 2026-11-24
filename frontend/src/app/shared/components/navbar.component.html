@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <a routerLink="/trips">Planer Wycieczek</a>
+  </div>
+
+  @if (authService.isLoggedIn()) {
+    <div class="nav-links">
+      <a routerLink="/trips" routerLinkActive="active">Moje wycieczki</a>
+      <a routerLink="/templates" routerLinkActive="active">Szablony</a>
+      <a routerLink="/friends" routerLinkActive="active">Znajomi</a>
+    </div>
+
+    <div class="nav-user">
+      <span class="username">{{ authService.currentUser()?.username }}</span>
+      <button (click)="authService.logout()">Wyloguj</button>
+    </div>
+  }
+</nav>
